@@ -1,0 +1,25 @@
+{
+  "name": "skillswap-backend",
+  "version": "1.0.0",
+  "description": "REST API for the SkillSwap peer-to-peer skill exchange platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "skillswap",
+    "nodejs",
+    "express",
+    "mysql"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mysql2": "^3.24.4"
+  }
+}

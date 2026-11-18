@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SkillSwap connects learners and mentors through peer-to-peer skill exchange.">
+    <title>SkillSwap — Learn. Teach. Exchange.</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <!-- AUTH SCREEN -->
+    <main id="authScreen" class="auth-shell">
+        <section class="auth-hero">
+            <div class="brand-mark">S<span>↗</span></div>
+            <p class="eyebrow">PEER-TO-PEER LEARNING</p>
+            <h1>Trade knowledge.<br><span>Grow together.</span></h1>
+            <p class="hero-copy">
+                SkillSwap helps students and curious learners find people who can teach what they want to learn — while sharing the skills they already know.
+            </p>
+            <div class="hero-pills">
+                <span>✦ Skill matching</span>
+                <span>↔ Swap requests</span>
+                <span>✓ Simple & secure</span>
+            </div>
+            <div class="hero-preview" aria-hidden="true">
+                <div class="preview-card preview-main">
+                    <span class="preview-kicker">RECIPROCAL MATCH</span>
+                    <div class="preview-people">
+                        <span class="preview-avatar">J</span>
+                        <div><strong>Java</strong><small>can teach</small></div>
+                        <span class="preview-arrow">↔</span>
+                        <div><strong>Python</strong><small>wants to learn</small></div>
+                        <span class="preview-avatar alt">P</span>
+                    </div>
+                    <div class="preview-status"><span></span> Perfect match found</div>
+                </div>
+                <div class="preview-float"><span>✓</span><div><strong>Swap request</strong><small>Ready to connect</small></div></div>
+            </div>
+        </section>
+
+        <section class="auth-card glass-card">
+            <div class="auth-tabs" role="tablist">
+                <button class="tab-btn active" data-auth-tab="login" type="button">Login</button>
+                <button class="tab-btn" data-auth-tab="register" type="button">Create account</button>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <div class="form-heading">
+                    <p class="eyebrow">WELCOME BACK</p>
+                    <h2>Sign in to SkillSwap</h2>
+                    <p>Continue your learning journey.</p>
+                </div>
+                <label>Email<input id="loginEmail" type="email" placeholder="you@example.com" autocomplete="email" required></label>
+                <label>Password<input id="loginPassword" type="password" placeholder="••••••••" autocomplete="current-password" required></label>
+                <button class="primary-btn full" type="submit">Sign in <span>→</span></button>
+                <p id="loginMessage" class="form-message"></p>
+            </form>
+
+            <form id="registerForm" class="auth-form hidden">
+                <div class="form-heading">
+                    <p class="eyebrow">JOIN THE COMMUNITY</p>
+                    <h2>Create your profile</h2>
+                    <p>Tell people what you can teach and what you want to learn.</p>
+                </div>
+                <div class="two-col">
+                    <label>Name<input id="name" type="text" placeholder="Your name" autocomplete="name" required></label>
+                    <label>Email<input id="email" type="email" placeholder="you@example.com" autocomplete="email" required></label>
+                </div>
+                <label>Password<input id="password" type="password" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" required></label>
+                <div class="skill-grid">
+                    <label><span>✦ I can teach</span><input id="skill_offered" type="text" placeholder="e.g. Java" required></label>
+                    <label><span>◌ I want to learn</span><input id="skill_wanted" type="text" placeholder="e.g. Python" required></label>
+                </div>
+                <button class="primary-btn full" type="submit">Create account <span>→</span></button>
+                <p id="registerMessage" class="form-message"></p>
+            </form>
+        </section>
+    </main>
+
+    <!-- APPLICATION -->
+    <div id="appShell" class="app-shell hidden">
+        <header class="topbar">
+            <a class="brand" href="#dashboard" data-nav="dashboard" aria-label="SkillSwap home">
+                <span class="brand-icon">S<span>↗</span></span>
+                <span>Skill<span>Swap</span></span>
+            </a>
+
+            <button id="mobileNavToggle" class="mobile-nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+
+            <nav id="mainNav" class="main-nav" aria-label="Main navigation">
+                <button class="nav-link active" data-nav="dashboard" type="button">Dashboard</button>
+                <button class="nav-link" data-nav="discover" type="button">Discover</button>
+                <button class="nav-link" data-nav="requests" type="button">
+                    Requests <span id="navBadge" class="nav-badge hidden">0</span>
+                </button>
+                <button class="nav-link" data-nav="connections" type="button">
+                    Connections <span id="connectionBadge" class="nav-badge hidden">0</span>
+                </button>
+                <button class="nav-link" data-nav="profile" type="button">Profile</button>
+            </nav>
+
+            <div class="top-actions">
+                <button id="themeToggle" class="icon-btn" type="button" title="Toggle theme" aria-label="Toggle theme">☾</button>
+                <div class="user-chip">
+                    <span id="avatar" class="avatar">S</span>
+                    <div><strong id="navUserName">User</strong><small id="navUserSkill">SkillSwap member</small></div>
+                </div>
+                <button id="logoutBtn" class="logout-btn" type="button">Logout</button>
+            </div>
+        </header>
+
+        <main class="page-wrap">
+
+            <!-- DASHBOARD -->
+            <section id="dashboardSection" class="page-section active-section">
+                <div class="dashboard-hero">
+                    <div>
+                        <p class="eyebrow">YOUR LEARNING SPACE</p>
+                        <h1>Welcome back, <span id="welcomeName">there</span> <span class="wave">👋</span></h1>
+                        <p>Find a skill match, send a swap request, and learn from your peers.</p>
+                    </div>
+                    <div class="hero-orb" aria-hidden="true"><span>↔</span></div>
+                </div>
+
+                <div class="stats-grid">
+                    <article class="stat-card glass-card">
+                        <span class="stat-icon purple">◎</span><div><strong id="statUsers">—</strong><span>Community members</span></div>
+                    </article>
+                    <article class="stat-card glass-card">
+                        <span class="stat-icon blue">⌕</span><div><strong id="statMatches">—</strong><span>Skill matches</span></div>
+                    </article>
+                    <article class="stat-card glass-card">
+                        <span class="stat-icon orange">↗</span><div><strong id="statPending">—</strong><span>Pending requests</span></div>
+                    </article>
+                    <article class="stat-card glass-card">
+                        <span class="stat-icon green">✓</span><div><strong id="statAccepted">—</strong><span>Accepted swaps</span></div>
+                    </article>
+                </div>
+
+                <section class="section-block">
+                    <div class="section-heading">
+                        <div><p class="eyebrow">SMART MATCHING</p><h2>Find your skill exchange</h2></div>
+                        <span class="section-note">Based on your profile</span>
+                    </div>
+                    <form id="matchForm" class="match-panel glass-card">
+                        <label><span>I can teach</span><input id="offerSkill" type="text" placeholder="e.g. Java" required></label>
+                        <div class="swap-symbol">⇄</div>
+                        <label><span>I want to learn</span><input id="wantSkill" type="text" placeholder="e.g. Python" required></label>
+                        <button class="primary-btn" type="submit">Find matches <span>→</span></button>
+                    </form>
+                </section>
+
+                <section class="section-block">
+                    <div class="section-heading">
+                        <div><p class="eyebrow">RECOMMENDED FOR YOU</p><h2>Perfect skill matches</h2></div>
+                        <button class="text-btn" data-nav="discover" type="button">View all →</button>
+                    </div>
+                    <div id="matches" class="card-grid"></div>
+                </section>
+
+                <section class="section-block how-it-works">
+                    <div class="section-heading">
+                        <div><p class="eyebrow">HOW IT WORKS</p><h2>Turn knowledge into connections</h2></div>
+                        <span class="section-note">Simple, reciprocal, community-first</span>
+                    </div>
+                    <div class="steps-grid">
+                        <article class="step-card glass-card"><span class="step-number">01</span><h3>Share your skills</h3><p>Tell the community what you can teach and what you want to learn.</p></article>
+                        <article class="step-card glass-card"><span class="step-number">02</span><h3>Find a match</h3><p>SkillSwap surfaces people whose teaching and learning goals align.</p></article>
+                        <article class="step-card glass-card"><span class="step-number">03</span><h3>Start the swap</h3><p>Send a request, accept the right connections, and learn together.</p></article>
+                    </div>
+                </section>
+            </section>
+
+            <!-- DISCOVER -->
+            <section id="discoverSection" class="page-section">
+                <div class="page-title-row">
+                    <div><p class="eyebrow">COMMUNITY</p><h1>Discover people</h1><p>Explore learners and mentors across the SkillSwap community.</p></div>
+                </div>
+                <div class="toolbar glass-card">
+                    <div class="search-box"><span>⌕</span><input id="discoverSearch" type="search" placeholder="Search by name or skill..." aria-label="Search community"></div>
+                    <select id="discoverFilter" aria-label="Filter users">
+                        <option value="all">All skills</option>
+                        <option value="teaches">People who teach</option>
+                        <option value="learns">People who want to learn</option>
+                    </select>
+                    <span id="discoverCount" class="toolbar-count">0 people</span>
+                </div>
+                <div id="usersList" class="card-grid"></div>
+            </section>
+
+            <!-- REQUESTS -->
+            <section id="requestsSection" class="page-section">
+                <div class="page-title-row">
+                    <div><p class="eyebrow">CONNECTIONS</p><h1>Swap requests</h1><p>Manage requests coming to you and track the ones you have sent.</p></div>
+                </div>
+                <div class="request-tabs">
+                    <button class="request-tab active" data-request-tab="received" type="button">Received <span id="receivedCount">0</span></button>
+                    <button class="request-tab" data-request-tab="sent" type="button">Sent <span id="sentCount">0</span></button>
+                </div>
+                <div id="receivedPanel" class="request-panel"></div>
+                <div id="sentPanel" class="request-panel hidden"></div>
+            </section>
+
+            <!-- CONNECTIONS -->
+            <section id="connectionsSection" class="page-section">
+                <div class="page-title-row">
+                    <div>
+                        <p class="eyebrow">YOUR NETWORK</p>
+                        <h1>My Connections</h1>
+                        <p>People you have successfully connected with through SkillSwap.</p>
+                    </div>
+
+                    <div class="connection-summary glass-card">
+                        <span>🤝</span>
+                        <div>
+                            <strong id="connectionCount">0</strong>
+                            <small>Connections</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="connectionsList" class="card-grid">
+                    <div class="empty-state glass-card">
+                        <div class="empty-icon">🤝</div>
+                        <h3>No connections yet</h3>
+                        <p>Accept a swap request to start building your learning network.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CHAT SECTION -->
+<section id="chatSection" class="page-section">
+
+    <div class="page-title-row">
+        <div>
+            <p class="eyebrow">YOUR MESSAGES</p>
+            <h1>SkillSwap Chat</h1>
+            <p>Connect, communicate and exchange knowledge.</p>
+        </div>
+    </div>
+
+    <div class="chat-container glass-card">
+
+        <div class="chat-header">
+            <div>
+                <h3 id="chatUserName">Select a connection</h3>
+                <p id="chatUserStatus">Start a conversation</p>
+            </div>
+        </div>
+
+        <div id="chatMessages" class="chat-messages">
+            <div class="empty-state">
+                <div class="empty-icon">💬</div>
+                <h3>No conversation selected</h3>
+                <p>Choose a connection to start chatting.</p>
+            </div>
+        </div>
+
+        <form id="chatForm" class="chat-input-area">
+
+            <input
+                type="text"
+                id="chatInput"
+                placeholder="Type your message..."
+                maxlength="2000"
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit" class="btn btn-primary">
+                Send ➤
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+            <!-- PROFILE -->
+            <section id="profileSection" class="page-section">
+                <div class="page-title-row">
+                    <div><p class="eyebrow">YOUR IDENTITY</p><h1>Your profile</h1><p>Keep your skills up to date so the right people can find you.</p></div>
+                </div>
+                <div class="profile-layout">
+                    <aside class="profile-card glass-card">
+                        <div id="profileAvatar" class="profile-avatar">S</div>
+                        <h2 id="profileName">User</h2>
+                        <p id="profileEmail">email@example.com</p>
+                        <div class="profile-badges"><span>Active member</span><span>Skill exchanger</span></div>
+                    </aside>
+                    <form id="profileForm" class="edit-card glass-card">
+                        <div class="section-heading"><div><p class="eyebrow">PROFILE SETTINGS</p><h2>Edit your skills</h2></div></div>
+                        <label>Full name<input id="profileNameInput" type="text" required></label>
+                        <label>Email<input id="profileEmailInput" type="email" disabled></label>
+                        <div class="skill-grid">
+                            <label><span>✦ Skill you offer</span><input id="profileOffer" type="text" required></label>
+                            <label><span>◌ Skill you want</span><input id="profileWant" type="text" required></label>
+                        </div>
+                        <button class="primary-btn" type="submit">Save changes <span>✓</span></button>
+                        <p id="profileMessage" class="form-message"></p>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <span>SkillSwap</span>
+            <span>Learn from peers. Share what you know.</span>
+            <span>Built with HTML · CSS · JavaScript · Node.js · MySQL</span>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
